@@ -32,7 +32,6 @@ public class DaoConta {
             ps.setString(2, v.getStatusConta().name());
             ps.setDouble(3, v.getValor());
             ps.setString(4, v.getNumeroConta());
-            ps.setString(5, "ATIVA");
 
             ps.executeUpdate();
 
@@ -80,7 +79,6 @@ public class DaoConta {
 	            p.setTipoConta(tipoConta.valueOf(rs.getString("tipo")));  // Se `tipoConta` for um enum
 	            p.setStatusConta(statusConta.valueOf(rs.getString("status")));
 	            p.setValor(rs.getDouble("valor"));
-	            p.setSituacao(rs.getString("situacao"));
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -106,7 +104,6 @@ public class DaoConta {
 	            conta.setTipoConta(tipoConta.valueOf(rs.getString("tipo")));  // Se `tipoConta` for um enum
 	            conta.setStatusConta(statusConta.valueOf(rs.getString("status")));
 	            conta.setValor(rs.getDouble("valor"));
-	            conta.setSituacao(rs.getString("situacao"));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
