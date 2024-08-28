@@ -158,7 +158,7 @@ public class CadastroController {
 	    }
 	}*/
 	
-	@PostMapping("/usuario")
+		@PostMapping("/usuario")
 	public ResponseEntity<Map<String, Object>> cadastrarUsuarioConta(@Validated @RequestBody UsuarioContaRequest request) {
 	    Conta conta = request.getConta();
 	    Usuario usuario = request.getUsuario();
@@ -166,15 +166,6 @@ public class CadastroController {
 	    // Gerar o número da conta
 	    String numeroConta = gerarNumeroContaUnico();
 	    conta.setNumeroConta(numeroConta);
-	    
-	    double salario = usuario.getSalario();
-	    if (salario < 2000) {
-	        conta.setStatusConta(Conta.statusConta.BRONZE);
-	    } else if (salario >= 2000 && salario < 5000) {
-	        conta.setStatusConta(Conta.statusConta.PRATA);
-	    } else {
-	        conta.setStatusConta(Conta.statusConta.OURO);
-	    }
 
 	    long idConta = cadConta.incluir(conta);
 
