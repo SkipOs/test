@@ -86,7 +86,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/atualizar")
-	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
+	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest numeroConta) {
 	    // Buscar conta pelo número
 	    //Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
 	    
