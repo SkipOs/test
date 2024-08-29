@@ -145,9 +145,10 @@ public class UsuarioController {
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum dado para atualizar");
 	
 		// Restante da lógica para atualizar o usuário
-} catch (NumberFormatException e) {
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
-}
+	} catch (NumberFormatException e) {
+	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
+	}
+	}
 
 
 	@PostMapping("/atualizar-senha")
