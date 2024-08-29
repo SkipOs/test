@@ -67,32 +67,6 @@ public class UsuarioController {
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta ou usuário não encontrados");
 	
-	@GetMapping("/detalhes-usuario")
-public ResponseEntity<Map<String, Object>> obterDetalhesUsuario(@RequestParam String numeroConta) {
-    // Buscar a conta pelo número da conta
-    Conta conta = cadConta.buscarContaPorNumero(numeroConta);
-    
-    if (conta != null) {
-        long idConta = conta.getId();
-        
-        // Buscar o usuário associado ao id da conta
-        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
-        
-        if (usuario != null) {
-            // Criar uma resposta com os detalhes do usuário
-            Map<String, Object> response = new HashMap<>();
-            response.put("nome", usuario.getNome());
-            response.put("email", usuario.getEmail());
-            response.put("cpf", usuario.getCpf());
-            response.put("dataNascimento", usuario.getDataNascimento());
-            
-            return ResponseEntity.ok(response);
-        }
-    }
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Conta ou usuário não encontrados"));
-}
-
-
 	@PostMapping("/atualizar")
 	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
 	    // Buscar conta pelo número
