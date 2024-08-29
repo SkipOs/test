@@ -189,29 +189,42 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/excluir")
-	public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
-	    String numeroConta = request.getNumeroConta();
-	    
-	    // Buscar conta pelo número
-	    Conta conta = cadConta.buscarContaPorNumero(numeroConta);
-	    
-	    if (conta == null) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
-	    }
-	    
-	    // Verificar o saldo da conta
-	    double saldo = conta.getValor();
-	    
-	    if (saldo > 0) {
-	        // Retornar o saldo a ser sacado
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo positivo de " + saldo + " encontrado. Por favor, saque o valor antes de encerrar a conta.");
-	    }
-	    
-	    // Atualizar a situação da conta para "INATIVO"
-	    conta.setSituacao("INATIVA");
-	    cadConta.inativarConta(conta);
-	    
-	    // Excluir a conta
-	    return ResponseEntity.ok("A conta foi inativada com sucesso.");
-	}
+public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
+    String numeroConta = request.getNumeroConta();
+    String senha = request.getSenha();  // Nova propriedade de senha no request
+    
+    // Buscar conta pelo número
+    Conta conta = cadConta.buscarContaPorNumero(numeroConta);
+    
+    if (conta == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
+    }
+    
+    // Buscar o usuário associado à conta
+    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
+    
+    if (usuario == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+    }
+    
+    // Verificar se a senha fornecida está correta
+    if (!usuario.getSenha().equals(senha)) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+    }
+    
+    // Verificar o saldo da conta
+    double saldo = conta.getValor();
+    
+    if (saldo > 0) {
+        // Retornar o saldo a ser sacado
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo positivo de " + saldo + " encontrado. Por favor, saque o valor antes de encerrar a conta.");
+    }
+    
+    // Atualizar a situação da conta para "INATIVA"
+    conta.setSituacao("INATIVA");
+    cadConta.inativarConta(conta);
+    
+    return ResponseEntity.ok("A conta foi inativada com sucesso.");
 }
+}
+
