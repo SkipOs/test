@@ -79,7 +79,8 @@ public class UsuarioController {
 	        response.put("nome", usuario.getNome());
 		response.put("email", usuario.getEmail()); 
 		response.put("cpf", usuario.getCpf()); 
-		response.put("dataNascimento", usuario.getDataNascimento()); 
+		response.put("dataNascimento", usuario.getDataNascimento());
+		response.put("cadConta", numeroConta);
 	        return ResponseEntity.ok(response);
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
