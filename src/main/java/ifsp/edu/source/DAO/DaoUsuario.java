@@ -60,7 +60,7 @@ public class DaoUsuario {
             usuario.setSalario(rs.getDouble("salario"));
             usuario.setEmail(rs.getString("email"));
             usuario.setCpf(rs.getString("cpf"));
-            usuario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate()); // Corrija a recuperação da data
+            usuario.setDataNascimento(rs.getString("data_nascimento")); // Corrija a recuperação da data
         }
     } catch (SQLException e) {
         e.printStackTrace();
