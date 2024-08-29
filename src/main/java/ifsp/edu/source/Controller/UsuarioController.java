@@ -214,10 +214,4 @@ public class UsuarioController {
 	    // Excluir a conta
 	    return ResponseEntity.ok("A conta foi inativada com sucesso.");
 	}
-
-	
-
-
-
-
 }
