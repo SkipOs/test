@@ -28,7 +28,7 @@ public class DaoUsuario {
         ps.setDouble(4, v.getSalario());
         ps.setString(5, v.getEmail());
         ps.setString(6, v.getCpf());
-        ps.setDate(7, Date.valueOf(v.getDataNascimento()));  // Corrija para usar Date
+        ps.setDate(7, v.getDataNascimento());  // Corrija para usar Date
 
         int ri = ps.executeUpdate(); 
         return ri > 0; // Verifique se a inserção foi bem-sucedida
