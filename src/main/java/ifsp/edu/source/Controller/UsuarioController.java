@@ -92,6 +92,7 @@ public class UsuarioController {
 	        }
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta ou usuário não encontrados");
+	}
 	
 	@PostMapping("/atualizar")
 	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
