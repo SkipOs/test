@@ -77,6 +77,9 @@ public class UsuarioController {
 	    if (usuario != null) {
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("nome", usuario.getNome());
+		response.put("email", usuario.getEmail()); 
+		response.put("cpf", usuario.getCpf()); 
+		response.put("dataNascimento", usuario.getDataNascimento()); 
 	        return ResponseEntity.ok(response);
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
