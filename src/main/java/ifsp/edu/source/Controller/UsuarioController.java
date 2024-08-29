@@ -189,7 +189,6 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/excluir")
-public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {    
     // Buscar conta pelo número
     //Conta conta = cadConta.buscarContaPorNumero(numeroConta);
     
@@ -202,26 +201,38 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
 
 /// nova busca
 
-	    // Verificar se o número da conta não é nulo ou vazio
-	    if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta é obrigatório");
-	    }
-	
-	    // Converter número da conta para long
-	    long idConta = Long.parseLong(request.getNumeroConta());
-	
-	        // Buscar usuário associado à conta
-	        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
-	        
-	        if (usuario == null) {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-	        }
+	@PostMapping("/excluir")
+public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {    
+    // Verificar se o número da conta não é nulo ou vazio
+    if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta é obrigatório");
+    }
+
+    // Converter número da conta para long
+    long idConta = Long.parseLong(request.getNumeroConta());
+
+    // Buscar a conta pelo número da conta
+    Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
     
+    if (conta == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
+    }
+    
+    // Buscar usuário associado à conta
+    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+
+    if (usuario == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+    }
+
+    // Extrair a senha da requisição
+    String senha = request.getSenha(); // Supondo que ExcluirContaRequest tem um método getSenha()
+
     // Verificar se a senha fornecida está correta
     if (!usuario.getSenha().equals(senha)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
     }
-    
+
     // Verificar o saldo da conta
     double saldo = conta.getValor();
     
@@ -229,12 +240,12 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
         // Retornar o saldo a ser sacado
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo positivo de " + saldo + " encontrado. Por favor, saque o valor antes de encerrar a conta.");
     }
-    
+
     // Atualizar a situação da conta para "INATIVA"
     conta.setSituacao("INATIVA");
     cadConta.inativarConta(conta);
     
     return ResponseEntity.ok("A conta foi inativada com sucesso.");
-	}
+}
 }
 
