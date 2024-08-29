@@ -27,7 +27,7 @@ public class LoginController {
 	
 
 	
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public ResponseEntity<?> Logar(@Validated @RequestBody ContaUsuarioRequest request) {
 	    Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
 	    
@@ -50,13 +50,18 @@ public class LoginController {
 	        }
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou conta não encontrados");
-	}
+	}*/
 
 	
-	/*@PostMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<?> Logar(@Validated @RequestBody ContaUsuarioRequest request) {
 	    Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
 	    if (conta != null) {
+
+		// Verifica se a conta está ativa
+	        if (!"ATIVA".equalsIgnoreCase(conta.getSituacao())) {
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Conta não está ativa.");
+	        }
 	        long idConta = conta.getId();
 	        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
 
@@ -69,5 +74,5 @@ public class LoginController {
 	        }
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou conta não encontrados");
-	}*/
+	}
 }
