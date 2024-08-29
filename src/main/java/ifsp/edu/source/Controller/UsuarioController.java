@@ -94,10 +94,10 @@ public class UsuarioController {
 	    //    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
 	    //}
 	    
-	    long idConta = conta.getId(request.getNumeroConta());
+	    //long idConta = conta.getId();
 	    
 	    // Buscar usuário associado à conta
-	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(request.getNumeroConta());
 	    
 	    if (usuario == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
