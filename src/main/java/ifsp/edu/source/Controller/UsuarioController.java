@@ -143,6 +143,33 @@ public class UsuarioController {
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum dado para atualizar");
 	}
 
+	@PostMapping("/atualizar-senha")
+	public ResponseEntity<String> atualizarSenha(@RequestBody Map<String, String> request) {
+	    String numeroConta = request.get("numeroConta");
+ 	   String senhaAtual = request.get("senhaAtual");
+ 	   String novaSenha = request.get("novaSenha");
+
+ 	   // Buscar a conta pelo número da conta
+ 	   Conta conta = cadConta.buscarContaPorNumero(numeroConta);
+	    if (conta != null) {
+  	      long idConta = conta.getId();
+	
+  	      // Buscar o usuário associado ao id da conta
+  	      Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+
+   	     if (usuario != null && usuario.getSenha().equals(senhaAtual)) {
+            // Atualizar a senha do usuário
+            usuario.setSenha(novaSenha);
+            cadUsuario.atualizar(usuario);
+            return ResponseEntity.ok("Senha atualizada com sucesso");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha atual incorreta");
+        }
+    }
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta ou usuário não encontrados");
+}
+
+
 	@PostMapping("/excluir")
 	public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
 	    String numeroConta = request.getNumeroConta();
