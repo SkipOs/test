@@ -55,24 +55,28 @@ public class LoginController {
 	
 @PostMapping("/login")
 public ResponseEntity<?> Logar(@Validated @RequestBody ContaUsuarioRequest request) {
+    System.out.println("Número da conta recebido: " + request.getNumeroConta());
+    System.out.println("Senha recebida: " + request.getSenha());
+
     Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
     if (conta != null) {
 
-        // Verifica se a conta está ativa
-        if (!"ATIVA".equalsIgnoreCase(conta.getSituacao())) {
+        System.out.println("Situação da conta: " + conta.getSituacao());
+
+        if (!"ATIVA".equalsIgnoreCase(conta.getSituacao().trim())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Conta não está ativa.");
         }
         
         long idConta = conta.getId();
         Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
 
-        if (usuario != null && 
-            (request.getSenha() != null && usuario.getSenha().trim().equals(request.getSenha().trim()))) {
+        if (usuario != null &&
+            request.getSenha() != null && 
+            usuario.getSenha().trim().equals(request.getSenha().trim())) {
 
-            // Retorna apenas o ID da conta
             return ResponseEntity.ok(idConta);
         }
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou conta não encontrados");
 }
-}
+
