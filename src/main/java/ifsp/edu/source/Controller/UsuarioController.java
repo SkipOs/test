@@ -98,7 +98,7 @@ public class UsuarioController {
 	    
 	    // Buscar usuário associado à conta
 	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
-	    */
+	    
 	    if (usuario == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
 	    }
