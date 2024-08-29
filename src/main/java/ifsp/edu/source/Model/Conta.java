@@ -21,6 +21,15 @@ public class Conta {
         this.situacao = situacao;
     }
 
+    public double getValor() {
+        return numeroConta;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    
     public String getNumeroConta() {
         return numeroConta;
     }
