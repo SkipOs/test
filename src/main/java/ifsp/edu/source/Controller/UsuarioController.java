@@ -190,19 +190,22 @@ public class UsuarioController {
 
 	@PostMapping("/excluir")
 public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
-    String numeroConta = request.getNumeroConta();
+    Long numeroConta = request.getNumeroConta();
     String senha = request.getSenha();  // Nova propriedade de senha no request
     
     // Buscar conta pelo número
-    Conta conta = cadConta.buscarContaPorNumero(numeroConta);
+    //Conta conta = cadConta.buscarContaPorNumero(numeroConta);
     
-    if (conta == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
-    }
+    //if (conta == null) {
+    //    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
+    //}
     
     // Buscar o usuário associado à conta
-    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
-    
+    //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
+
+// nova busca
+Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(numeroConta);
+	
     if (usuario == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
     }
