@@ -239,7 +239,6 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     cadConta.inativarConta(conta);
     
     return ResponseEntity.ok("A conta foi inativada com sucesso.");
-}
 } catch (NumberFormatException e) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
 	    }
