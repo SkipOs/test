@@ -46,8 +46,6 @@ public class UsuarioController {
 	DaoCaixaEletronico cadCaixa = new DaoCaixaEletronico();
 	DaoMovimento cadMovimento = new DaoMovimento();
 	
-	
-	
 	@PostMapping("/detalhes-usuario")
 	public ResponseEntity<?> obterDetalhesUsuario(@RequestBody Map<String, String> request) {
 	    String numeroConta = request.get("numeroConta");
@@ -154,13 +152,7 @@ public ResponseEntity<String> atualizarSenha(@RequestBody Map<String, String> se
         return ResponseEntity.badRequest().body("Dados incompletos");
     }
 
-    @PostMapping("/atualizar-senha")
-public ResponseEntity<String> atualizarSenha(@RequestBody Map<String, String> request) {
-    String numeroConta = request.get("numeroConta");
-    String senhaAtual = request.get("senhaAtual");
-    String novaSenha = request.get("novaSenha");
-
-    // Buscar a conta pelo número da conta
+	// Buscar a conta pelo número da conta
     Conta conta = cadConta.buscarContaPorNumero(numeroConta);
     if (conta != null) {
         long idConta = conta.getId();
@@ -179,11 +171,6 @@ public ResponseEntity<String> atualizarSenha(@RequestBody Map<String, String> re
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta ou usuário não encontrados");
 }
-
-
-    return ResponseEntity.ok("Senha alterada com sucesso");
-}
-
 
 	@PostMapping("/excluir")
 	public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
