@@ -19,7 +19,11 @@ public class DaoConta {
        String sqlString = "insert into conta(tipo, status, valor, numero_conta) values (?,?,?,?)";
         try {
             PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString, PreparedStatement.RETURN_GENERATED_KEYS);
-            
+
+	if(v.getSituacao() == null){
+		v.setSituacao('ATIVA');
+
+		
             if (v.getTipoConta() == null) {
                 v.setTipoConta(Conta.tipoConta.CORRENTE); // Define o tipo como CORRENTE se não estiver definido
             }
@@ -31,7 +35,6 @@ public class DaoConta {
             ps.setString(2, v.getStatusConta().name());
             ps.setDouble(3, v.getValor());
             ps.setString(4, v.getNumeroConta());
-		v.setSituacao('ATIVA');
             ps.executeUpdate();
 
             // Recupera o ID gerado
