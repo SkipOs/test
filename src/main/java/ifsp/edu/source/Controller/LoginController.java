@@ -59,8 +59,9 @@ public class LoginController {
 	    if (conta != null) {
 
 		if (!"ATIVA".equalsIgnoreCase(conta.getSituacao().trim())) {
+		System.out.println("Situação da conta: " + conta.getSituacao());
 		    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Conta não está ativa.");
-			System.out.println("Situação da conta: " + conta.getSituacao());
+
 
 		}
 
