@@ -4,7 +4,7 @@ public class Conta {
     private long id;
     private tipoConta tipoConta;
     private statusConta statusConta;
-    private String valor;
+    private double valor;
     private String numeroConta;
     private String situacao;
 
@@ -21,7 +21,7 @@ public class Conta {
         this.situacao = situacao;
     }
 
-    public String getValor() {
+    public double getValor() {
         return numeroConta;
     }
 
