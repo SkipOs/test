@@ -1,70 +1,67 @@
 package ifsp.edu.source.Model;
 
 public class Conta {
-  private long id;
-  private tipoConta tipoConta;
-  private statusConta statusConta;
-  private double valor;
-  private String numeroConta;
-  private String situacao;
+    private long id;
+    private tipoConta tipoConta;
+    private statusConta statusConta;
+    private double valor;
+    private String numeroConta;
+    private String situacao;
 
-  public String getSituacao() {
-	return situacao;
-}
+    // Construtor
+    public Conta() {
+        this.situacao = "ATIVA"; // Define a situação como ATIVA por padrão
+    }
 
-public void setSituacao(String situacao) {
-	this.situacao = situacao;
-}
+    public String getSituacao() {
+        return situacao;
+    }
 
-public String getNumeroConta() {
-	return numeroConta;
-}
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
 
-public void setNumeroConta(String numeroConta) {
-	this.numeroConta = numeroConta;
-}
+    public String getNumeroConta() {
+        return numeroConta;
+    }
 
-public long getId() {
-    return id;
-  }
+    public void setNumeroConta(String numeroConta) {
+        this.numeroConta = numeroConta;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public tipoConta getTipoConta() {
-    return tipoConta;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public void setTipoConta(tipoConta tipoConta) {
-    this.tipoConta = tipoConta;
-  }
+    public tipoConta getTipoConta() {
+        return tipoConta;
+    }
 
-  public statusConta getStatusConta() {
-    return statusConta;
-  }
+    public void setTipoConta(tipoConta tipoConta) {
+        this.tipoConta = tipoConta;
+    }
 
-  public void setStatusConta(statusConta statusConta) {
-    this.statusConta = statusConta;
-  }
+    public statusConta getStatusConta() {
+        return statusConta;
+    }
 
-  public double getValor() {
-    return valor;
-  }
+    public void setStatusConta(statusConta statusConta) {
+        this.statusConta = statusConta;
+    }
 
-  public void setValor(double valor) {
-    this.valor = valor;
-  }
+    // Enums for account type and status
+    public enum tipoConta {
+        CORRENTE,
+        POUPANCA
+    }
 
-  // Enums for account type and status
-  public enum tipoConta {
-    CORRENTE,
-    POUPANCA
-  }
-
-  public enum statusConta {
-    OURO,
-    PRATA,
-    BRONZE
-  }
+    public enum statusConta {
+        OURO,
+        PRATA,
+        BRONZE
+    }
 }
