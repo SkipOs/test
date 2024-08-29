@@ -12,40 +12,44 @@ import ifsp.edu.source.Model.Usuario;
 
 public class DaoConta {
 	
-	
 	public long incluir(Conta v) {
-        DataBaseCom.conectar();
+    DataBaseCom.conectar();
 
-       String sqlString = "insert into conta(tipo, status, valor, numero_conta) values (?,?,?,?)";
-        try {
-            PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString, PreparedStatement.RETURN_GENERATED_KEYS);
-            if (v.getTipoConta() == null) {
-                v.setTipoConta(Conta.tipoConta.CORRENTE); // Define o tipo como CORRENTE se não estiver definido
-            }
-            if (v.getStatusConta() == null) {
-                v.setStatusConta(Conta.statusConta.BRONZE); // Define o tipo como CORRENTE se não estiver definido
-            }
-            // Converte os enums para String
-            ps.setString(1, v.getTipoConta().name());
-            ps.setString(2, v.getStatusConta().name());
-            ps.setDouble(3, v.getValor());
-            ps.setString(4, v.getNumeroConta());
-            ps.executeUpdate();
+    String sqlString = "insert into conta(tipo, status, valor, numero_conta, situacao) values (?,?,?,?,?)";
+    try {
+        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            // Recupera o ID gerado
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-		if(v.getSituacao() == null){
-		v.setSituacao("ATIVA");
-
-		}
-                return rs.getLong(1); // Retorna o ID gerado
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        // Define os valores dos campos
+        if (v.getTipoConta() == null) {
+            v.setTipoConta(Conta.tipoConta.CORRENTE); // Define o tipo como CORRENTE se não estiver definido
         }
-        return -1; // Retorna -1 se houver erro
+        if (v.getStatusConta() == null) {
+            v.setStatusConta(Conta.statusConta.BRONZE); // Define o status como BRONZE se não estiver definido
+        }
+        if (v.getSituacao() == null) {
+            v.setSituacao("ATIVA"); // Define a situação como ATIVA se não estiver definida
+        }
+
+        // Converte os enums para String e seta os valores
+        ps.setString(1, v.getTipoConta().name());
+        ps.setString(2, v.getStatusConta().name());
+        ps.setDouble(3, v.getValor());
+        ps.setString(4, v.getNumeroConta());
+        ps.setString(5, v.getSituacao()); // Adiciona a situação aqui
+
+        ps.executeUpdate();
+
+        // Recupera o ID gerado
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getLong(1); // Retorna o ID gerado
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+    return -1; // Retorna -1 se houver erro
+}
+
 	
 	public boolean verificarNumeroContaExistente(String numeroConta) {
         DataBaseCom.conectar();
