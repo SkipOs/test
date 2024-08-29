@@ -75,3 +75,4 @@ public ResponseEntity<?> Logar(@Validated @RequestBody ContaUsuarioRequest reque
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou conta não encontrados");
 }
+}
