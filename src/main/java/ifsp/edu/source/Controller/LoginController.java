@@ -58,10 +58,12 @@ public class LoginController {
 	    Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
 	    if (conta != null) {
 
-		// Verifica se a conta está ativa
-	        if (!"ATIVA".equalsIgnoreCase(conta.getSituacao())) {
-	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Conta não está ativa.");
-	        }
+		if (!"ATIVA".equalsIgnoreCase(conta.getSituacao().trim())) {
+		    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Conta não está ativa.");
+			System.out.println("Situação da conta: " + conta.getSituacao());
+
+		}
+
 	        long idConta = conta.getId();
 	        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
 
