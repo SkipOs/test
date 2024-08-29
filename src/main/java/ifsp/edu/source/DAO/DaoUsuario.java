@@ -17,58 +17,58 @@ public class DaoUsuario {
 	
 	
 	public boolean incluir(Usuario v) {
-	    DataBaseCom.conectar();
+    DataBaseCom.conectar();
 
-	    String sqlString = "INSERT INTO usuario (nome, senha, id_conta, salario, email, cpf, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	    try {
-	        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString);
-	        ps.setString(1, v.getNome());
-	        ps.setString(2, v.getSenha());
-	        ps.setLong(3, v.getIdConta());
-	        ps.setDouble(4, v.getSalario());
-	        ps.setString(5, v.getEmail());
-	        ps.setString(6, v.getCpf());
-	        ps.setString(6, v.getDataNascimento());
-	        //ps.setDate(7, Date.valueOf(v.getDataNascimento())); // Certifique-se de que `v.getDataNascimento()` retorna um LocalDate
+    String sqlString = "INSERT INTO usuario (nome, senha, id_conta, salario, email, cpf, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try {
+        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString);
+        ps.setString(1, v.getNome());
+        ps.setString(2, v.getSenha());
+        ps.setLong(3, v.getIdConta());
+        ps.setDouble(4, v.getSalario());
+        ps.setString(5, v.getEmail());
+        ps.setString(6, v.getCpf());
+        ps.setDate(7, Date.valueOf(v.getDataNascimento()));  // Corrija para usar Date
 
-	        boolean ri = ps.execute(); 
-	        return ri;
-	    } catch (SQLException ex) {
-	        ex.printStackTrace();
-	    }
-	    return false;
-	}
+        int ri = ps.executeUpdate(); 
+        return ri > 0; // Verifique se a inserção foi bem-sucedida
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return false;
+}
+
 	
 	
 
 	public Usuario buscarUsuarioPorIdConta(long id) {
-	    DataBaseCom.conectar();
-	    Usuario usuario = null;
-	    String query = "SELECT * FROM usuario WHERE id_conta = ?";
-	    
-	    try {
-	        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(query);
-	        ps.setLong(1, id);
-	        ResultSet rs = ps.executeQuery();
-	        
-	        if (rs.next()) {
-	            usuario = new Usuario();
-	            usuario.setId(rs.getLong("id"));
-	            usuario.setNome(rs.getString("nome"));
-	            usuario.setSenha(rs.getString("senha"));
-	            usuario.setIdConta(rs.getLong("id_conta"));
-	            usuario.setSalario(rs.getDouble("salario"));
-	            usuario.setEmail(rs.getString("email"));
-	            usuario.setCpf(rs.getString("cpf"));
-	            usuario.setDataNascimento("data_nascimento");
-	            //usuario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    return usuario;
-	}
+    DataBaseCom.conectar();
+    Usuario usuario = null;
+    String query = "SELECT * FROM usuario WHERE id_conta = ?";
+
+    try {
+        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(query);
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            usuario = new Usuario();
+            usuario.setId(rs.getLong("id"));
+            usuario.setNome(rs.getString("nome"));
+            usuario.setSenha(rs.getString("senha"));
+            usuario.setIdConta(rs.getLong("id_conta"));
+            usuario.setSalario(rs.getDouble("salario"));
+            usuario.setEmail(rs.getString("email"));
+            usuario.setCpf(rs.getString("cpf"));
+            usuario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate()); // Corrija a recuperação da data
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return usuario;
+}
+
 
 	
 	
