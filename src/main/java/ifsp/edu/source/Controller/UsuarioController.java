@@ -86,7 +86,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/atualizar")
-	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest numeroConta) {
+	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
 	    // Buscar conta pelo número
 	    //Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
 	    
@@ -99,7 +99,7 @@ public class UsuarioController {
 	    // Buscar usuário associado à conta
 	    //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
 
-	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(numeroConta);
+	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(request);
 		
 	    if (usuario == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
