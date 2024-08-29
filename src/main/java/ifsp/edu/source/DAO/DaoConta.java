@@ -23,7 +23,6 @@ public class DaoConta {
             if (v.getTipoConta() == null) {
                 v.setTipoConta(Conta.tipoConta.CORRENTE); // Define o tipo como CORRENTE se não estiver definido
             }
-            
             if (v.getStatusConta() == null) {
                 v.setStatusConta(Conta.statusConta.BRONZE); // Define o tipo como CORRENTE se não estiver definido
             }
@@ -32,7 +31,7 @@ public class DaoConta {
             ps.setString(2, v.getStatusConta().name());
             ps.setDouble(3, v.getValor());
             ps.setString(4, v.getNumeroConta());
-
+		v.setSituacao('ATIVA');
             ps.executeUpdate();
 
             // Recupera o ID gerado
