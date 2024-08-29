@@ -189,10 +189,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/excluir")
-public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
-    Long numeroConta = parseLong(request.getNumeroConta());
-    String senha = request.getSenha();  // Nova propriedade de senha no request
-    
+public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {    
     // Buscar conta pelo número
     //Conta conta = cadConta.buscarContaPorNumero(numeroConta);
     
@@ -210,9 +207,8 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta é obrigatório");
 	    }
 	
-	    try {
-	        // Converter número da conta para long
-	        long idConta = Long.parseLong(request.getNumeroConta());
+	    // Converter número da conta para long
+	    long idConta = Long.parseLong(request.getNumeroConta());
 	
 	        // Buscar usuário associado à conta
 	        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
@@ -239,9 +235,6 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     cadConta.inativarConta(conta);
     
     return ResponseEntity.ok("A conta foi inativada com sucesso.");
-} catch (NumberFormatException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
-	    }
 	}
 }
 
