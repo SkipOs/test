@@ -31,7 +31,7 @@ public class DaoConta {
             ps.setString(2, v.getStatusConta().name());
             ps.setDouble(3, v.getValor());
             ps.setString(4, v.getNumeroConta());
-		v.setSituacao('ATIVA');
+		ps.setSituacao('ATIVA');
             ps.executeUpdate();
 
             // Recupera o ID gerado
