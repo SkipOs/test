@@ -47,7 +47,7 @@ public class UsuarioController {
 	
 	
 	
-	@PostMapping("/detalhes-usuario")
+@PostMapping("/detalhes-usuario")
 	public ResponseEntity<?> obterDetalhesUsuario(@RequestBody Map<String, String> request) {
 	    String numeroConta = request.get("numeroConta");
 
@@ -66,7 +66,6 @@ public class UsuarioController {
 	        }
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta ou usuário não encontrados");
-	}
 	
 	@GetMapping("/detalhes-usuario")
 public ResponseEntity<Map<String, Object>> obterDetalhesUsuario(@RequestParam String numeroConta) {
