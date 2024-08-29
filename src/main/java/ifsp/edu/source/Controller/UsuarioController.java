@@ -203,12 +203,23 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     // Buscar o usuário associado à conta
     //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
 
-// nova busca
-Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(numeroConta);
+/// nova busca
+
+	    // Verificar se o número da conta não é nulo ou vazio
+	    if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta é obrigatório");
+	    }
 	
-    if (usuario == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-    }
+	    try {
+	        // Converter número da conta para long
+	        long idConta = Long.parseLong(request.getNumeroConta());
+	
+	        // Buscar usuário associado à conta
+	        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+	        
+	        if (usuario == null) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+	        }
     
     // Verificar se a senha fornecida está correta
     if (!usuario.getSenha().equals(senha)) {
