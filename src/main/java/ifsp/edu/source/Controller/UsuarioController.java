@@ -100,6 +100,6 @@ public class UsuarioController {
 
         conta.setSituacao("INATIVA");
         cadConta.inativarConta(conta);
-        return ResponseEntity.ok("A conta foi inativada com sucesso.");
+        return ResponseEntity.ok(Map.of("message", "A conta foi inativada com sucesso."));
     }
 }
