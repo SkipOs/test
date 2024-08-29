@@ -99,8 +99,10 @@ public class UsuarioController {
 	    // Buscar usuário associado à conta
 	    //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
 
-	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(request.getNumeroConta());
-		
+	try {
+    		long idConta = Long.parseLong(request.getNumeroConta());
+   		 Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+    		
 	    if (usuario == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
 	    }
@@ -142,6 +144,11 @@ public class UsuarioController {
 	    
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum dado para atualizar");
 	}
+		// Restante da lógica para atualizar o usuário
+} catch (NumberFormatException e) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
+}
+
 
 	@PostMapping("/atualizar-senha")
 public ResponseEntity<String> atualizarSenha(@RequestBody Map<String, String> senhaData) {
