@@ -190,7 +190,7 @@ public class UsuarioController {
 
 	@PostMapping("/excluir")
 public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
-    Long numeroConta = request.getNumeroConta();
+    Long numeroConta = parseLong(request.getNumeroConta());
     String senha = request.getSenha();  // Nova propriedade de senha no request
     
     // Buscar conta pelo número
