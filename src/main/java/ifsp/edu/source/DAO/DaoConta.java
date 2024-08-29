@@ -20,10 +20,10 @@ public class DaoConta {
         try {
             PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString, PreparedStatement.RETURN_GENERATED_KEYS);
 
-	if(v.getSituacao() == null){
+		if(v.getSituacao() == null){
 		v.setSituacao('ATIVA');
 
-		
+		}
             if (v.getTipoConta() == null) {
                 v.setTipoConta(Conta.tipoConta.CORRENTE); // Define o tipo como CORRENTE se não estiver definido
             }
