@@ -7,7 +7,10 @@ public class Conta {
   private double valor;
   private String numeroConta;
   private String situacao;
-
+   
+	public Conta() {
+        this.situacao = "ATIVA"; // Define a situação como ATIVA por padrão
+    }
   public String getSituacao() {
 	return situacao;
 }
