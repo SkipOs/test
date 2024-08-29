@@ -84,71 +84,65 @@ public class UsuarioController {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	    }
 	}
+@PostMapping("/atualizar")
+public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
+    // Verificar se o número da conta não é nulo ou vazio
+    if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta é obrigatório");
+    }
 
-	@PostMapping("/atualizar")
-	public ResponseEntity<String> atualizarUsuario(@RequestBody AtualizarUsuarioRequest request) {
-	    // Buscar conta pelo número
-	    //Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
-	    
-	    //if (conta == null) {
-	    //    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
-	    //}
-	    
-	    //long idConta = conta.getId();
-	    
-	    // Buscar usuário associado à conta
-	    //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+    try {
+        // Converter número da conta para long
+        long idConta = Long.parseLong(request.getNumeroConta());
 
-	try {
-    		long idConta = Long.parseLong(request.getNumeroConta());
-   		 Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
-    		
-	    if (usuario == null) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-	    }
-	    
-	    // Atualizar informações do usuário
-	    boolean atualizado = false;
-	    
-	    if (request.getNome() != null && !request.getNome().isEmpty()) {
-	        usuario.setNome(request.getNome());
-	        atualizado = true;
-	    }
-	    
-	    if (request.getSenha() != null && !request.getSenha().isEmpty()) {
-	        usuario.setSenha(request.getSenha());
-	        atualizado = true;
-	    }
-	    
-	    if (request.getEmail() != null && !request.getEmail().isEmpty()) {
-	        usuario.setEmail(request.getEmail());
-	        atualizado = true;
-	    }
-	    
-	    if (request.getCpf() != null && !request.getCpf().isEmpty()) {
-	        usuario.setCpf(request.getCpf());
-	        atualizado = true;
-	    }
-	    
-	    if (request.getDataNascimento() != null) {
-	        //usuario.setDataNascimento(request.getDataNascimento());
-	        usuario.setDataNascimento(request.getDataNascimento());
-	        atualizado = true;
-	    }
-	    
-	    // Atualizar usuário no banco de dados
-	    if (atualizado) {
-	        cadUsuario.atualizar(usuario);
-	        return ResponseEntity.ok("Usuário atualizado com sucesso");
-	    }
-	    
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum dado para atualizar");
-	
-		// Restante da lógica para atualizar o usuário
-	} catch (NumberFormatException e) {
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
-	}
-	}
+        // Buscar usuário associado à conta
+        Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
+        
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        }
+
+        // Atualizar informações do usuário
+        boolean atualizado = false;
+
+        if (request.getNome() != null && !request.getNome().isEmpty()) {
+            usuario.setNome(request.getNome());
+            atualizado = true;
+        }
+
+        if (request.getSenha() != null && !request.getSenha().isEmpty()) {
+            usuario.setSenha(request.getSenha());
+            atualizado = true;
+        }
+
+        if (request.getEmail() != null && !request.getEmail().isEmpty()) {
+            usuario.setEmail(request.getEmail());
+            atualizado = true;
+        }
+
+        if (request.getCpf() != null && !request.getCpf().isEmpty()) {
+            usuario.setCpf(request.getCpf());
+            atualizado = true;
+        }
+
+        if (request.getDataNascimento() != null && !request.getDataNascimento().isEmpty()) {
+            usuario.setDataNascimento(request.getDataNascimento());
+            atualizado = true;
+        }
+
+        // Atualizar usuário no banco de dados
+        if (atualizado) {
+            cadUsuario.atualizar(usuario);
+            return ResponseEntity.ok("Usuário atualizado com sucesso");
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum dado para atualizar");
+
+    } catch (NumberFormatException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
+    }
+}
+
 
 
 	@PostMapping("/atualizar-senha")
