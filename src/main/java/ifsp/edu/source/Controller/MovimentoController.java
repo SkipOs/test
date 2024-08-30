@@ -19,6 +19,8 @@ import ifsp.edu.source.Model.Usuario;
 import ifsp.edu.source.Request.DepositoRequest;
 import ifsp.edu.source.Request.SaqueRequest;
 import ifsp.edu.source.Request.TransferenciaRequest;
+import ifsp.edu.source.Request.PixRequest;
+
 
 @RestController
 public class MovimentoController {
@@ -27,6 +29,64 @@ public class MovimentoController {
 	DaoConta cadConta = new DaoConta();
 	DaoCaixaEletronico cadCaixa = new DaoCaixaEletronico();
 	DaoMovimento cadMovimento = new DaoMovimento();
+
+	@PostMapping("/pix")
+public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
+    String numeroContaRemetente = request.getNumeroContaRemetente();
+    double valorTransferencia = request.getValorTransferencia();
+    String numeroContaDestinatario = request.getNumeroContaDestinatario();
+    String senha = request.getSenha();
+
+    // Buscar a conta do remetente pelo número
+    Conta contaRemetente = cadConta.buscarContaPorNumero(numeroContaRemetente);
+
+    if (contaRemetente == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"success\": false, \"message\": \"Conta remetente não encontrada\"}");
+    }
+
+    // Buscar a conta do destinatário pelo número
+    Conta contaDestinatario = cadConta.buscarContaPorNumero(numeroContaDestinatario);
+
+    if (contaDestinatario == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"success\": false, \"message\": \"Conta destinatário não encontrada\"}");
+    }
+
+    // Verificar se o número da conta remetente é igual ao número da conta destinatário
+    if (contaRemetente.getNumeroConta().equals(numeroContaDestinatario)) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"success\": false, \"message\": \"Não é possível transferir para a mesma conta.\"}");
+    }
+
+    // Buscar o usuário associado à conta remetente
+    Usuario usuarioRemetente = cadUsuario.buscarUsuarioPorIdConta(contaRemetente.getId());
+
+    if (usuarioRemetente == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"success\": false, \"message\": \"Usuário não encontrado\"}");
+    }
+
+    // Verificar a senha do remetente
+    if (!usuarioRemetente.getSenha().equals(senha)) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"success\": false, \"message\": \"Senha incorreta\"}");
+    }
+
+    // Verificar saldo suficiente
+    if (contaRemetente.getValor() < valorTransferencia) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"success\": false, \"message\": \"Saldo insuficiente na conta remetente\"}");
+    }
+
+    // Realizar a transferência PIX
+    contaRemetente.setValor(contaRemetente.getValor() - valorTransferencia);
+    cadConta.atualizarConta(contaRemetente);
+
+    contaDestinatario.setValor(contaDestinatario.getValor() + valorTransferencia);
+    cadConta.atualizarConta(contaDestinatario);
+
+    // Registrar a transferência PIX
+    cadMovimento.registrarPix(contaRemetente.getId(), contaDestinatario.getId(), valorTransferencia);
+
+    // Retornar sucesso
+    return ResponseEntity.ok("{\"success\": true, \"message\": \"Transferência PIX realizada com sucesso\"}");
+}
+
 	
 	/*@PostMapping("/transferencia")
 	public ResponseEntity<String> transferir(@RequestBody TransferenciaRequest request) {
