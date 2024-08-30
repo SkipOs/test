@@ -1,17 +1,17 @@
 package ifsp.edu.source.Request;
 
 public class PixRequest {
-	    private String idContaRemetente; // og long
+	    private long idContaRemetente; // og long
 	    private String numeroContaDestinatario;
 	    private double valorTransferencia;
 	    private String senha;
 
 	    // Getters e Setters
-	    public String getIdContaRemetente() {// og long
+	    public long getIdContaRemetente() {// og long
 	        return idContaRemetente;
 	    }
 
-	    public void setIdContaRemetente(String idContaRemetente) {// og long
+	    public void setIdContaRemetente(long idContaRemetente) {// og long
 	        this.idContaRemetente = idContaRemetente;
 	    }
 
