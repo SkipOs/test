@@ -249,7 +249,6 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
 	} catch (NumberFormatException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
     }
-
-
+}
 }
 
