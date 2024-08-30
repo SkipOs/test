@@ -244,8 +244,9 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
 
     // Atualizar a situação da conta para "INATIVA"
     conta.setSituacao("INATIVA");
-	 System.out.print(conta.getSituacao());
+	 System.out.println(conta.getSituacao());
     cadConta.inativarConta(conta);
+	 System.out.println(conta.getSituacao());
 
     return ResponseEntity.ok("A conta foi inativada com sucesso.");
 }
