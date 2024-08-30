@@ -7,11 +7,11 @@ public class TransferenciaRequest {
 	    private String senha;
 
 	    // Getters e Setters
-	    public long getIdContaRemetente() {
+	    public String getIdContaRemetente() {
 	        return idContaRemetente;
 	    }
 
-	    public void setIdContaRemetente(long idContaRemetente) {
+	    public void setIdContaRemetente(String idContaRemetente) {
 	        this.idContaRemetente = idContaRemetente;
 	    }
 
