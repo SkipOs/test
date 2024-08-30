@@ -200,7 +200,6 @@ public class UsuarioController {
     //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
 
 /// nova busca
-@PostMapping("/excluir")
 public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
     // Verificar se o número da conta não é nulo ou vazio
     if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
