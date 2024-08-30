@@ -216,39 +216,39 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     long idConta;
     try {
         idConta = Long.parseLong(request.getNumeroConta());
-    } catch (NumberFormatException e) {
+    
+
+	    // Buscar a conta pelo número da conta
+	    Conta conta = cadConta.buscarContaPorId(request.getNumeroConta());
+	    if (conta == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
+	    }
+	
+	    // Buscar usuário associado à conta
+	    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
+	    if (usuario == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+	    }
+	
+	    // Verificar se a senha fornecida está correta
+	    if (!usuario.getSenha().equals(senha)) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+	    }
+	
+	    // Verificar o saldo da conta
+	    double saldo = conta.getValor();
+	    if (saldo > 0) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo positivo de " + saldo + " encontrado. Por favor, saque o valor antes de encerrar a conta.");
+	    }
+	
+	    // Atualizar a situação da conta para "INATIVA"
+	    conta.setSituacao("INATIVA");
+	    cadConta.inativarConta(conta);
+	
+	    return ResponseEntity.ok("A conta foi inativada com sucesso.");
+	} catch (NumberFormatException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Número da conta inválido");
     }
-
-    // Buscar a conta pelo número da conta
-    Conta conta = cadConta.buscarContaPorId(request.getNumeroConta());
-    if (conta == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
-    }
-
-    // Buscar usuário associado à conta
-    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
-    if (usuario == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-    }
-
-    // Verificar se a senha fornecida está correta
-    if (!usuario.getSenha().equals(senha)) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
-    }
-
-    // Verificar o saldo da conta
-    double saldo = conta.getValor();
-    if (saldo > 0) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo positivo de " + saldo + " encontrado. Por favor, saque o valor antes de encerrar a conta.");
-    }
-
-    // Atualizar a situação da conta para "INATIVA"
-    conta.setSituacao("INATIVA");
-    cadConta.inativarConta(conta);
-
-    return ResponseEntity.ok("A conta foi inativada com sucesso.");
-}
 
 
 }
