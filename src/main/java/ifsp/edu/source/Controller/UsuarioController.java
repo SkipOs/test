@@ -227,7 +227,7 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     }
 
     // Buscar usuário associado à conta
-    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getIdConta());
+    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
     if (usuario == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
     }
