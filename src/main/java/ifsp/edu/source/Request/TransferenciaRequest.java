@@ -1,17 +1,17 @@
 package ifsp.edu.source.Request;
 
 public class TransferenciaRequest {
-	    private String idContaRemetente;
+	    private String idContaRemetente; // og long
 	    private String numeroContaDestinatario;
 	    private double valorTransferencia;
 	    private String senha;
 
 	    // Getters e Setters
-	    public String getIdContaRemetente() {
+	    public String getIdContaRemetente() {// og long
 	        return idContaRemetente;
 	    }
 
-	    public void setIdContaRemetente(String idContaRemetente) {
+	    public void setIdContaRemetente(String idContaRemetente) {// og long
 	        this.idContaRemetente = idContaRemetente;
 	    }
 
