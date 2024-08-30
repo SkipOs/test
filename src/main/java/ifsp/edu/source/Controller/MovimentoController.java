@@ -31,7 +31,7 @@ public class MovimentoController {
 
 	@PostMapping("/pix")
 public ResponseEntity<String> realizarPix(@RequestBody TransferenciaRequest request) {
-    String numeroContaRemetente = request.getIdContaRemetente();
+    long numeroContaRemetente = request.getIdContaRemetente();
     double valorTransferencia = request.getValorTransferencia();
     String numeroContaDestinatario = request.getNumeroContaDestinatario();
     String senha = request.getSenha();
