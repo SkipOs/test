@@ -143,8 +143,7 @@ public class DaoConta {
 	        PreparedStatement ps = DataBaseCom.getConnection().prepareStatement(sqlString);
 	        ps.setString(1, conta.getSituacao());
 	        ps.setString(2, conta.getNumeroConta());
-		    print(conta.getSituacao());
-    		    print(conta.getNumeroConta());
+		     console.log(ps);
 	        int resultado = ps.executeUpdate();
 	        return resultado > 0;
 	    } catch (SQLException ex) {
