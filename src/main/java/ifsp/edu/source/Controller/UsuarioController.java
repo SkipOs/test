@@ -199,7 +199,7 @@ public class UsuarioController {
     // Buscar o usuário associado à conta
     //Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getId());
 
-/// nova busca
+/// nova busca @PostMapping("/excluir")
 public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest request) {
     // Verificar se o número da conta não é nulo ou vazio
     if (request.getNumeroConta() == null || request.getNumeroConta().isEmpty()) {
@@ -226,7 +226,13 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
     }
 
-	// Verificar se a senha fornecida está correta
+    // Buscar usuário associado à conta
+    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(conta.getIdConta());
+    if (usuario == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+    }
+
+    // Verificar se a senha fornecida está correta
     if (!usuario.getSenha().equals(senha)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
     }
@@ -243,6 +249,7 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
 
     return ResponseEntity.ok("A conta foi inativada com sucesso.");
 }
+
 
 }
 
