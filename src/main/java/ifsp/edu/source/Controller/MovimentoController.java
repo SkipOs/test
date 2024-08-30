@@ -38,7 +38,7 @@ public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
     String numeroContaDestinatario = request.getNumeroContaDestinatario();
     String senha = request.getSenha();
 
-    Buscar a conta do remetente pelo número
+    // Buscar a conta do remetente pelo número
     Conta contaRemetente = cadConta.buscarContaPorId(Long.toString(numeroContaRemetente));
 
     if (contaRemetente == null) {
