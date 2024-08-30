@@ -108,11 +108,14 @@ public class DaoConta {
 	            conta.setNumeroConta(rs.getString("numero_conta"));
 	            conta.setTipoConta(tipoConta.valueOf(rs.getString("tipo")));  // Se `tipoConta` for um enum
 	            conta.setStatusConta(statusConta.valueOf(rs.getString("status")));
+		    conta.setSituacao(rs.getString("situacao"));
 	            conta.setValor(rs.getDouble("valor"));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } 
+		if (conta.getSituacao() != "ATIVA"
+		    return("Conta inativa!")
 	    return conta;
 	}
 	
