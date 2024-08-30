@@ -2,7 +2,7 @@ package ifsp.edu.source.Request;
 
 public class PixRequest {
 	    private long idContaRemetente; // og long
-	    private String numeroContaDestinatario;
+	    private long numeroContaDestinatario;
 	    private double valorTransferencia;
 	    private String senha;
 
@@ -15,11 +15,11 @@ public class PixRequest {
 	        this.idContaRemetente = idContaRemetente;
 	    }
 
-	    public String getNumeroContaDestinatario() {
+	    public long getNumeroContaDestinatario() {
 	        return numeroContaDestinatario;
 	    }
 
-	    public void setNumeroContaDestinatario(String numeroContaDestinatario) {
+	    public void setNumeroContaDestinatario(long numeroContaDestinatario) {
 	        this.numeroContaDestinatario = numeroContaDestinatario;
 	    }
 
