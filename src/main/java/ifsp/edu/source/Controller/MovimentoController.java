@@ -35,7 +35,7 @@ public class MovimentoController {
 public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
     long numeroContaRemetente = request.getIdContaRemetente();
     double valorTransferencia = request.getValorTransferencia();
-    String numeroContaDestinatario = request.getNumeroContaDestinatario();
+    long numeroContaDestinatario = request.getNumeroContaDestinatario();
     String senha = request.getSenha();
 
     // Buscar a conta do remetente pelo número
@@ -46,7 +46,7 @@ public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
     }
 
     // Buscar a conta do destinatário pelo número
-    Conta contaDestinatario = cadConta.buscarContaPorNumero(numeroContaDestinatario);
+    Conta contaDestinatario = cadConta.buscarContaPorId(numeroContaDestinatario);
 
     if (contaDestinatario == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"success\": false, \"message\": \"Conta destinatário não encontrada\"}");
