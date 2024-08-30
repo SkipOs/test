@@ -39,7 +39,7 @@ public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
     String senha = request.getSenha();
 
     // Buscar a conta do remetente pelo número
-    Conta contaRemetente = cadConta.buscarContaPorNumero(numeroContaRemetente);
+    Conta contaRemetente = cadConta.buscarContaPorNumero(Long.toString(numeroContaRemetente));
 
     if (contaRemetente == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"success\": false, \"message\": \"Conta remetente não encontrada\"}");
