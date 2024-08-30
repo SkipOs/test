@@ -114,8 +114,6 @@ public class DaoConta {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } 
-		if (conta.getSituacao() != "ATIVA"
-		    return("Conta inativa!")
 	    return conta;
 	}
 	
