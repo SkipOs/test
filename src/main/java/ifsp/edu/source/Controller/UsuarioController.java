@@ -221,7 +221,7 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
     }
 
     // Buscar a conta pelo número da conta
-    Conta conta = cadConta.buscarContaPorNumero(request.getNumeroConta());
+    Conta conta = cadConta.buscarContaPorId(request.getNumeroConta());
     if (conta == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
     }
