@@ -1,6 +1,6 @@
 package ifsp.edu.source.Request;
 
-public class TransferenciaRequest {
+public class PixRequest {
 	    private String idContaRemetente; // og long
 	    private String numeroContaDestinatario;
 	    private double valorTransferencia;
