@@ -83,6 +83,7 @@ public class DaoConta {
 	            p.setNumeroConta(rs.getString("numero_conta"));
 	            p.setTipoConta(tipoConta.valueOf(rs.getString("tipo")));  // Se `tipoConta` for um enum
 	            p.setStatusConta(statusConta.valueOf(rs.getString("status")));
+	            p.setSituacao(sitaucao.valueOf(rs.getString("situacao")));
 	            p.setValor(rs.getDouble("valor"));
 	        }
 	    } catch (Exception e) {
