@@ -30,7 +30,7 @@ public class MovimentoController {
 	DaoMovimento cadMovimento = new DaoMovimento();
 
 	@PostMapping("/pix")
-public ResponseEntity<String> realizarPix(@RequestBody PixRequest request) {
+public ResponseEntity<String> realizarPix(@RequestBody TransferenciaRequest request) {
     String numeroContaRemetente = request.getNumeroContaRemetente();
     double valorTransferencia = request.getValorTransferencia();
     String numeroContaDestinatario = request.getNumeroContaDestinatario();
