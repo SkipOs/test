@@ -19,7 +19,6 @@ import ifsp.edu.source.Model.Usuario;
 import ifsp.edu.source.Request.DepositoRequest;
 import ifsp.edu.source.Request.SaqueRequest;
 import ifsp.edu.source.Request.TransferenciaRequest;
-import ifsp.edu.source.Request.PixRequest;
 
 
 @RestController
