@@ -226,13 +226,7 @@ public ResponseEntity<String> excluirConta(@RequestBody ExcluirContaRequest requ
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada");
     }
 
-    // Buscar usuário associado à conta
-    Usuario usuario = cadUsuario.buscarUsuarioPorIdConta(idConta);
-    if (usuario == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
-    }
-
-    // Verificar se a senha fornecida está correta
+	// Verificar se a senha fornecida está correta
     if (!usuario.getSenha().equals(senha)) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
     }
